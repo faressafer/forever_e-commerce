@@ -11,6 +11,7 @@ import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
 import Contact from "./pages/Contact";
 import Footer from "./components/Footer";
+import SearchBar from "./components/SearchBar";
 
 
 
@@ -24,6 +25,7 @@ function App() {
 
     <div className="px-4 sm:px-[5vm] md:px-[7vm] lg:px-[9vm]"> 
       <Navbar/>
+      <SearchBar/>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/collection" element={<Collection/>}/>
