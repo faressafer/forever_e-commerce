@@ -2,10 +2,11 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
+import RelatedProducts from "../components/RelatedProducts";
 
 const Product = () => {
   const { productId } = useParams();
-  const { products, currency } = useContext(ShopContext);
+  const { products, currency, addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
@@ -15,7 +16,6 @@ const Product = () => {
       const cleanProductId = productId.replace("$", "");
       if (item._id === cleanProductId) {
         setProductData(item);
-        console.log(productData);
         setImage(item.image[0]);
         return null;
       }
@@ -72,7 +72,7 @@ const Product = () => {
             <div className="flex gap-2">
               {productData.sizes.map((item, index) => (
                 <button
-                  className={`broder py-2 px-4 bg-gray-100 ${
+                  className={`border py-2 px-4 bg-gray-100 ${
                     item === size ? "border-orange-500" : ""
                   }`}
                   onClick={() => setSize(item)}
@@ -83,7 +83,10 @@ const Product = () => {
               ))}
             </div>
           </div>
-          <button className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700">
+          <button
+            onClick={() => addToCart(productData._id, size)}
+            className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
+          >
             ADD TO CART
           </button>
           <hr className="mt-8 sm:w-4/5" />
@@ -115,6 +118,12 @@ const Product = () => {
           </p>
         </div>
       </div>
+      {/* display related producsts */}
+
+      <RelatedProducts
+        category={productData.category}
+        subCategory={productData.subCategory}
+      />
     </div>
   ) : (
     <div className="opacity-0"></div>
