@@ -12,17 +12,19 @@ const Product = () => {
   const [size, setSize] = useState("");
 
   const fetchProductData = async () => {
-    products.map((item) => {
+    if (productId) {  // Ensure productId is defined
       const cleanProductId = productId.replace("$", "");
-      if (item._id === cleanProductId) {
-        setProductData(item);
-        setImage(item.image[0]);
+      products.map((item) => {
+        if (item._id === cleanProductId) {
+          setProductData(item);
+          setImage(item.image[0]);
+          return null;
+        }
         return null;
-      }
-      return null;
-    });
+      });
+    }
   };
-
+  
   useEffect(() => {
     fetchProductData();
   }, [productId]);
